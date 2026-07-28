@@ -3,12 +3,13 @@ import java.util.Objects;
 
 public class ImageReminder implements Reminder{
     private final String imageFile;
+    private JFrame frame;
     public ImageReminder(String imageFile) {
         this.imageFile = imageFile;
     }
     @Override
     public void execute() {
-            JFrame frame = new JFrame("Reminder");
+            frame = new JFrame("Reminder");
 
             ImageIcon image =
                     new ImageIcon(
@@ -27,6 +28,8 @@ public class ImageReminder implements Reminder{
 
     @Override
     public void stop() {
-
+        if(frame != null) {
+            frame.dispose();
+        }
     }
 }
