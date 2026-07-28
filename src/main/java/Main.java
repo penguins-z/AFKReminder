@@ -10,6 +10,6 @@ public class Main {
         ReminderManager reminderManager = new ReminderManager(config);
         IdleMonitor idleMonitor = new IdleMonitor(config.getIdleThresholdSeconds(), reminderManager);
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(idleMonitor::checkIdleTime, 0, 2, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(idleMonitor::checkIdleTime, 0, 1, TimeUnit.SECONDS);
     }
 }

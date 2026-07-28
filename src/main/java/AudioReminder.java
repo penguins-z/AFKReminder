@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class AudioReminder implements Reminder{
     private final String audioFile;
+    private Clip clip;
     public AudioReminder(String audioFile) {
         this.audioFile = audioFile;
     }
@@ -17,7 +18,7 @@ public class AudioReminder implements Reminder{
                                         "Error fetching audio... Provided audio source was not found")
                         );
 
-                Clip clip = AudioSystem.getClip();
+                clip = AudioSystem.getClip();
 
                 clip.open(audioInputStream);
 
@@ -30,6 +31,9 @@ public class AudioReminder implements Reminder{
 
     @Override
     public void stop() {
-
+        if(clip != null) {
+            clip.stop();
+            clip.close();
+        }
     }
 }

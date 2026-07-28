@@ -1,15 +1,8 @@
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinUser;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+
 
 public class IdleMonitor {
     private final WinUser.LASTINPUTINFO lastInputInfo = new WinUser.LASTINPUTINFO();
@@ -33,15 +26,17 @@ public class IdleMonitor {
         int currentTickCount = Kernel32.INSTANCE.GetTickCount();
 
         int idleSeconds = (currentTickCount - lastInputInfo.dwTime) / 1000;
-        //System.out.println("Idle time: " + idleSeconds + " seconds");
-        if(reminderTriggered) {
-            reminderManager.stopReminders();
-        }
+        System.out.println("dw time: " + lastInputInfo.dwTime);
+
         if (idleSeconds >= idleThresholdSeconds && !reminderTriggered) {
             reminderManager.triggerReminders();
             reminderTriggered = true;
-        } else if (idleSeconds < idleThresholdSeconds) {
+        }else if(idleSeconds < idleThresholdSeconds && reminderTriggered) {
+            reminderManager.stopReminders();
             reminderTriggered = false;
         }
+        /*else if (idleSeconds < idleThresholdSeconds) {
+            reminderTriggered = false;
+        }*/
     }
 }
