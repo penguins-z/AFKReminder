@@ -1,3 +1,7 @@
+package reminder;
+
+import config.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 

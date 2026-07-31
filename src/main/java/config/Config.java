@@ -1,6 +1,4 @@
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
+package config;
 
 public class Config {
 
@@ -15,7 +13,28 @@ public class Config {
     private final boolean videoEnabled;
     private final String videoFile;
 
-    public Config() {
+    public Config(
+            int idleThresholdSeconds,
+            boolean audioEnabled,
+            String audioFile,
+            boolean imageEnabled,
+            String imageFile,
+            boolean videoEnabled,
+            String videoFile
+    ) {
+        this.idleThresholdSeconds = idleThresholdSeconds;
+
+        this.audioEnabled = audioEnabled;
+        this.audioFile = audioFile;
+
+        this.imageEnabled = imageEnabled;
+        this.imageFile = imageFile;
+
+        this.videoEnabled = videoEnabled;
+        this.videoFile = videoFile;
+    }
+
+    /*public config.Config() {
     Properties properties = new Properties();
     try(InputStream inputStream = Objects.requireNonNull(getClass().getClassLoader()
             .getResourceAsStream("config.properties"), "config.properties file not found")) {
@@ -36,7 +55,7 @@ public class Config {
     catch (Exception e) {
         throw new RuntimeException("Failed to load configuration", e);
     }
-    }
+    }*/
 
     public int getIdleThresholdSeconds() {
         return idleThresholdSeconds;

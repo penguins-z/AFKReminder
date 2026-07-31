@@ -1,9 +1,11 @@
+package reminder;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.util.Objects;
 
-public class AudioReminder implements Reminder{
+public class AudioReminder implements Reminder {
     private final String audioFile;
     private Clip clip;
     public AudioReminder(String audioFile) {

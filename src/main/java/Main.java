@@ -1,3 +1,8 @@
+import config.Config;
+import config.ConfigManager;
+import monitor.IdleMonitor;
+import reminder.ReminderManager;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -6,7 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Config config = new Config();
+        ConfigManager configManager = new ConfigManager();
+        Config config = configManager.load();
         ReminderManager reminderManager = new ReminderManager(config);
         IdleMonitor idleMonitor = new IdleMonitor(config.getIdleThresholdSeconds(), reminderManager);
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
