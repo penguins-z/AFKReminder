@@ -29,11 +29,14 @@ public class IdleMonitor {
 
         int idleSeconds = (currentTickCount - lastInputInfo.dwTime) / 1000;
         System.out.println("dw time: " + lastInputInfo.dwTime);
+        System.out.println("idle seconds is:  " + idleSeconds);
 
         if (idleSeconds >= idleThresholdSeconds && !reminderTriggered) {
+            System.out.println("THRESHOLD REACHED - TRIGGERING REMINDERS");
             reminderManager.triggerReminders();
             reminderTriggered = true;
         }else if(idleSeconds < idleThresholdSeconds && reminderTriggered) {
+            System.out.println("IDLE RESET - STOPPING REMINDERS");
             reminderManager.stopReminders();
             reminderTriggered = false;
         }

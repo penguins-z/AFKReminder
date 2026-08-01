@@ -3,6 +3,7 @@ package reminder;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.Objects;
 
 public class AudioReminder implements Reminder {
@@ -13,22 +14,21 @@ public class AudioReminder implements Reminder {
     }
     @Override
     public void execute() {
-            try {
-                AudioInputStream audioInputStream =
-                        AudioSystem.getAudioInputStream(
-                                Objects.requireNonNull(getClass().getResource("/" + audioFile),
-                                        "Error fetching audio... Provided audio source was not found")
-                        );
+        try {
+            File file = new File(audioFile);
 
+            try(AudioInputStream audioInputStream =
+                    AudioSystem.getAudioInputStream(file)) {
                 clip = AudioSystem.getClip();
 
                 clip.open(audioInputStream);
 
                 clip.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

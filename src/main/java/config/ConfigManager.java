@@ -9,22 +9,43 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ConfigManager {
-    private Path configDirectory;
-    private Path configFile;
+    private final Path configDirectory;
+    private final Path configFile;
+    private final ConfigValidator configValidator;
 
     public ConfigManager() {
-        String userName = System.getProperty("user.home");
-        configDirectory = Paths.get(userName,"AppData", "Local", "AFKReminder");
+        String userHome = System.getProperty("user.home");
+        configDirectory = Paths.get(userHome,"AppData", "Local", "AFKReminder");
         configFile = configDirectory.resolve("config.properties");
+        configValidator = new ConfigValidator();
     }
 
-    private Config createDefaultConfig() {
+    private Config validateAndCreateConfig(Properties properties) {
+        configValidator.validateProperties(properties);
+        System.out.println("afk time is : " + properties.getProperty("idle.threshold.seconds"));
+        return createConfig(properties);
+    }
+
+    private Config createConfig(Properties properties) {
+        return new Config(
+                Integer.parseInt(properties.getProperty("idle.threshold.seconds")),
+                Boolean.parseBoolean(properties.getProperty("reminder.audio.enabled")),
+                properties.getProperty("reminder.audio.file"),
+                Boolean.parseBoolean(properties.getProperty("reminder.image.enabled")),
+                properties.getProperty("reminder.image.file"),
+                Boolean.parseBoolean(properties.getProperty("reminder.video.enabled")),
+                properties.getProperty("reminder.video.file")
+        );
+    }
+
+    private Config createAndSaveDefaultConfig() {
+        System.out.println("create called");
         try {
             Files.createDirectories(configDirectory);
 
             Properties properties = new Properties();
 
-            properties.setProperty("idle.threshold.seconds", "300");
+            properties.setProperty("idle.threshold.seconds", "2");
 
             properties.setProperty("reminder.audio.enabled", "false");
             properties.setProperty("reminder.audio.file", "");
@@ -38,71 +59,33 @@ public class ConfigManager {
             try (OutputStream outputStream = Files.newOutputStream(configFile)) {
                 properties.store(
                         outputStream,
-                        "AFK reminder.Reminder Configuration"
+                        "AFK Reminder Configuration"
                 );
             }
-
-            return new Config(
-                    300,
-                    false,
-                    "",
-                    false,
-                    "",
-                    false,
-                    ""
-            );
+            return validateAndCreateConfig(properties);
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to create default configuration", e);
+            throw new RuntimeException(
+                    "Failed to create default configuration", e
+            );
         }
     }
 
     public Config load() {
-
-        int idleThresholdSeconds;
-
-        boolean audioEnabled;
-        String audioFile;
-
-        boolean imageEnabled;
-        String imageFile;
-
-        boolean videoEnabled;
-        String videoFile;
-
+        System.out.println("load called");
         try {
             if (Files.notExists(configFile)) {
-                return createDefaultConfig();
+                return createAndSaveDefaultConfig();
             }
-
+            System.out.println("file exists so no create");
             Properties properties = new Properties();
 
             try (InputStream inputStream = Files.newInputStream(configFile)) {
                 properties.load(inputStream);
             }
+            return validateAndCreateConfig(properties);
 
-            new ConfigValidator().validateProperties(properties);
-
-            return new Config(
-                    idleThresholdSeconds = Integer.parseInt(properties.getProperty("idle.threshold.seconds")),
-
-                    audioEnabled = Boolean.parseBoolean(
-                            properties.getProperty("reminder.audio.enabled")
-                    ),
-                    audioFile = properties.getProperty("reminder.audio.file"),
-
-                    imageEnabled = Boolean.parseBoolean(
-                            properties.getProperty("reminder.image.enabled")
-                    ),
-                    imageFile = properties.getProperty("reminder.image.file"),
-
-                    videoEnabled = Boolean.parseBoolean(
-                            properties.getProperty("reminder.video.enabled")
-                    ),
-                    videoFile = properties.getProperty("reminder.video.file")
-            );
-
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Failed to load configuration", e);
         }
     }

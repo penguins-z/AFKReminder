@@ -1,5 +1,6 @@
 package reminder;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -13,42 +14,79 @@ public class VideoReminder implements Reminder {
 
     private final String videoFile;
     private MediaPlayer mediaPlayer;
+    private Stage stage;
+
     public VideoReminder(String videoFile) {
         this.videoFile = videoFile;
     }
 
     @Override
     public void execute() {
-        try {
-            File video = new File(videoFile);
-            String videoUrl = video.toURI().toString();
 
-            System.out.println(videoUrl);
+        System.out.println("Video execute called");
 
-            Media media = new Media(videoUrl);
+        Platform.runLater(() -> {
 
-            mediaPlayer = new MediaPlayer(media);
+            try {
+                File video = new File(videoFile);
+                String videoUrl = video.toURI().toString();
 
-            MediaView mediaView = new MediaView(mediaPlayer);
+                System.out.println("Creating Media");
 
-            Stage stage = new Stage();
+                Media media = new Media(videoUrl);
 
-            StackPane root = new StackPane();
-            root.getChildren().add(mediaView);
+                mediaPlayer = new MediaPlayer(media);
 
-            Scene scene = new Scene(root);
+                MediaView mediaView = new MediaView(mediaPlayer);
 
-            stage.setScene(scene);
+                mediaPlayer.setOnReady(() -> {
 
-            stage.show();
+                    System.out.println("Video media READY");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    mediaView.setFitWidth(media.getWidth());
+                    mediaView.setFitHeight(media.getHeight());
+                    mediaView.setPreserveRatio(true);
+
+                    stage = new Stage();
+
+                    StackPane root = new StackPane();
+                    root.getChildren().add(mediaView);
+
+                    Scene scene = new Scene(root);
+
+                    stage.setScene(scene);
+                    stage.show();
+
+                    System.out.println("Starting video playback");
+
+                    mediaPlayer.play();
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
     public void stop() {
 
+        System.out.println("Video stop called");
+
+        Platform.runLater(() -> {
+
+            if (mediaPlayer != null) {
+                System.out.println("Stopping video player");
+                mediaPlayer.stop();
+                mediaPlayer.dispose();
+                mediaPlayer = null;
+            }
+
+            if (stage != null) {
+                System.out.println("Closing video stage");
+                stage.close();
+                stage = null;
+            }
+        });
     }
 }
