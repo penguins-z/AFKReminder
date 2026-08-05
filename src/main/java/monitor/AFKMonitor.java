@@ -10,14 +10,27 @@ public class AFKMonitor {
     private final WinUser.LASTINPUTINFO lastInputInfo = new WinUser.LASTINPUTINFO();
     private boolean reminderTriggered = false;
     private final int idleThresholdSeconds;
-    private ReminderManager reminderManager;
+    private final ReminderManager reminderManager;
+    private boolean paused = false;
 
     public AFKMonitor(int idleThresholdSeconds, ReminderManager reminderManager) {
         this.idleThresholdSeconds = idleThresholdSeconds;
         this.reminderManager = reminderManager;
     }
 
+    public void pause() {
+        paused = true;
+    }
+
+    public void resume() {
+        paused = false;
+    }
+
     public void checkIdleTime() {
+        if (paused) {
+            return;
+        }
+
         boolean success = User32.INSTANCE.GetLastInputInfo(lastInputInfo);
 
         if (!success) {

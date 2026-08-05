@@ -1,4 +1,5 @@
 import app.AFKApplication;
+import app.AFKTray;
 import config.Config;
 import config.ConfigManager;
 import javafx.application.Platform;
@@ -23,7 +24,9 @@ public class Main {
 
         try {
 
-            Platform.startup(() -> Platform.setImplicitExit(false));
+            Platform.startup(() -> {
+                Platform.setImplicitExit(false);
+            });
 
             ConfigManager configManager =
                     new ConfigManager();
@@ -53,8 +56,14 @@ public class Main {
             AFKApplication application =
                     new AFKApplication(
                             executorService,
-                            reminderManager
+                            reminderManager,
+                            afkMonitor
                     );
+
+            AFKTray tray =
+                    new AFKTray(application);
+
+            tray.show();
 
             Runtime.getRuntime().addShutdownHook(
                     new Thread(
@@ -63,7 +72,9 @@ public class Main {
                     )
             );
 
-            AFKLogger.info("Application started successfully");
+            AFKLogger.info(
+                    "Application started successfully"
+            );
 
         } catch (Exception e) {
 
