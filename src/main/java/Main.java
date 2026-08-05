@@ -1,7 +1,7 @@
 import config.Config;
 import config.ConfigManager;
 import javafx.application.Platform;
-import monitor.IdleMonitor;
+import monitor.AFKMonitor;
 import reminder.ReminderManager;
 
 import java.util.concurrent.Executors;
@@ -21,7 +21,7 @@ public class Main {
 
         ReminderManager reminderManager = new ReminderManager(config);
 
-        IdleMonitor idleMonitor = new IdleMonitor(config.getIdleThresholdSeconds(), reminderManager);
+        AFKMonitor idleMonitor = new AFKMonitor(config.getIdleThresholdSeconds(), reminderManager);
 
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(idleMonitor::checkIdleTime, 0, 1, TimeUnit.SECONDS);

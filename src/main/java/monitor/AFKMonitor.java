@@ -6,13 +6,13 @@ import com.sun.jna.platform.win32.WinUser;
 import reminder.ReminderManager;
 
 
-public class IdleMonitor {
+public class AFKMonitor {
     private final WinUser.LASTINPUTINFO lastInputInfo = new WinUser.LASTINPUTINFO();
     private boolean reminderTriggered = false;
     private final int idleThresholdSeconds;
     private ReminderManager reminderManager;
 
-    public IdleMonitor(int idleThresholdSeconds, ReminderManager reminderManager) {
+    public AFKMonitor(int idleThresholdSeconds, ReminderManager reminderManager) {
         this.idleThresholdSeconds = idleThresholdSeconds;
         this.reminderManager = reminderManager;
     }

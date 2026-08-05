@@ -7,6 +7,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import util.ScreenPosition;
 
 import java.io.File;
 
@@ -15,9 +16,12 @@ public class VideoReminder implements Reminder {
     private final String videoFile;
     private MediaPlayer mediaPlayer;
     private Stage stage;
+    private final ScreenPositionEnum screenPositionEnum;
+    private ScreenPosition positionUtil;
 
-    public VideoReminder(String videoFile) {
+    public VideoReminder(String videoFile, ScreenPositionEnum screenPositionEnum) {
         this.videoFile = videoFile;
+        this.screenPositionEnum = screenPositionEnum;
     }
 
     @Override
@@ -43,8 +47,14 @@ public class VideoReminder implements Reminder {
 
                     System.out.println("Video media READY");
 
-                    mediaView.setFitWidth(media.getWidth());
-                    mediaView.setFitHeight(media.getHeight());
+                    positionUtil = new ScreenPosition(
+                            screenPositionEnum,
+                            (int) media.getWidth(),
+                            (int) media.getHeight()
+                    );
+
+                    mediaView.setFitWidth(positionUtil.getWidth());
+                    mediaView.setFitHeight(positionUtil.getHeight());
                     mediaView.setPreserveRatio(true);
 
                     stage = new Stage();
@@ -52,9 +62,17 @@ public class VideoReminder implements Reminder {
                     StackPane root = new StackPane();
                     root.getChildren().add(mediaView);
 
-                    Scene scene = new Scene(root);
+                    Scene scene = new Scene(
+                            root,
+                            positionUtil.getWidth(),
+                            positionUtil.getHeight()
+                    );
 
                     stage.setScene(scene);
+
+                    stage.setX(positionUtil.getX());
+                    stage.setY(positionUtil.getY());
+
                     stage.show();
 
                     System.out.println("Starting video playback");
