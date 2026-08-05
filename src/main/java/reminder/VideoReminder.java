@@ -73,6 +73,7 @@ public class VideoReminder implements Reminder {
                     stage.setX(positionUtil.getX());
                     stage.setY(positionUtil.getY());
 
+                    stage.setAlwaysOnTop(true);
                     stage.show();
 
                     System.out.println("Starting video playback");

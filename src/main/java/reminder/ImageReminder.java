@@ -1,19 +1,24 @@
 package reminder;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import util.ScreenPosition;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 
 public class ImageReminder implements Reminder {
 
     private final String imageFile;
-    private JFrame frame;
     private final ScreenPositionEnum screenPositionEnum;
-    private ScreenPosition positionUtil;
 
-    public ImageReminder(String imageFile, ScreenPositionEnum screenPositionEnum) {
+    private Stage stage;
+
+    public ImageReminder(
+            String imageFile,
+            ScreenPositionEnum screenPositionEnum
+    ) {
         this.imageFile = imageFile;
         this.screenPositionEnum = screenPositionEnum;
     }
@@ -21,47 +26,80 @@ public class ImageReminder implements Reminder {
     @Override
     public void execute() {
 
-        frame = new JFrame("AFK Reminder");
+        System.out.println("Image execute called");
 
-        ImageIcon originalImage =
-                new ImageIcon(new File(imageFile).getAbsolutePath());
+        Platform.runLater(() -> {
 
-        positionUtil = new ScreenPosition(
-                screenPositionEnum,
-                originalImage.getIconWidth(),
-                originalImage.getIconHeight()
-        );
+            try {
 
-        Image scaledImage =
-                originalImage.getImage().getScaledInstance(
-                        positionUtil.getWidth(),
-                        positionUtil.getHeight(),
-                        Image.SCALE_SMOOTH
+                Image image = new Image(
+                        "file:" + imageFile
                 );
 
-        ImageIcon image =
-                new ImageIcon(scaledImage);
+                int mediaWidth = (int) image.getWidth();
+                int mediaHeight = (int) image.getHeight();
 
-        JLabel label = new JLabel(image);
+                System.out.println(
+                        "Image dimensions: "
+                                + mediaWidth
+                                + "x"
+                                + mediaHeight
+                );
 
-        frame.add(label);
+                ScreenPosition positionUtil =
+                        new ScreenPosition(
+                                screenPositionEnum,
+                                mediaWidth,
+                                mediaHeight
+                        );
 
-        frame.pack();
+                ImageView imageView = new ImageView(image);
 
-        frame.setLocation(
-                positionUtil.getX(),
-                positionUtil.getY()
-        );
+                imageView.setFitWidth(positionUtil.getWidth());
+                imageView.setFitHeight(positionUtil.getHeight());
+                imageView.setPreserveRatio(true);
 
-        frame.setVisible(true);
+                StackPane root = new StackPane();
+                root.getChildren().add(imageView);
+
+                Scene scene = new Scene(
+                        root,
+                        positionUtil.getWidth(),
+                        positionUtil.getHeight()
+                );
+
+                stage = new Stage();
+
+                stage.setScene(scene);
+
+                stage.setX(positionUtil.getX());
+                stage.setY(positionUtil.getY());
+
+                stage.setAlwaysOnTop(true);
+                stage.show();
+
+                System.out.println("Image displayed");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
     public void stop() {
 
-        if (frame != null) {
-            frame.dispose();
-            frame = null;
-        }
+        System.out.println("Image stop called");
+
+        Platform.runLater(() -> {
+
+            if (stage != null) {
+
+                System.out.println("Closing image stage");
+
+                stage.close();
+                stage = null;
+            }
+        });
     }
 }
