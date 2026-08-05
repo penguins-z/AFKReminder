@@ -77,7 +77,7 @@ public class VideoReminder implements Reminder {
                     stage.show();
 
                     //System.out.println("Starting video playback");
-
+                    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
                     mediaPlayer.play();
                 });
 

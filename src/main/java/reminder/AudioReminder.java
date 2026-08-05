@@ -23,7 +23,7 @@ public class AudioReminder implements Reminder {
 
                 clip.open(audioInputStream);
 
-                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
             }
 
         } catch (Exception e) {

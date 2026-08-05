@@ -120,6 +120,14 @@ public class ConfigValidator {
             return;
         }
         try {
+            System.out.println(
+                    "CHECKING FILE: [" + fileName + "]"
+            );
+
+            System.out.println(
+                    "EXISTS: "
+                            + Files.isRegularFile(Paths.get(fileName))
+            );
             if (!Files.isRegularFile(Paths.get(fileName))) {
                 errors.add("File given for " + property + " does not exist or is not a file");
             }
