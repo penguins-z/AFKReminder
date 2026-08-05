@@ -27,7 +27,7 @@ public class VideoReminder implements Reminder {
     @Override
     public void execute() {
 
-        System.out.println("Video execute called");
+        //System.out.println("Video execute called");
 
         Platform.runLater(() -> {
 
@@ -35,7 +35,7 @@ public class VideoReminder implements Reminder {
                 File video = new File(videoFile);
                 String videoUrl = video.toURI().toString();
 
-                System.out.println("Creating Media");
+                //System.out.println("Creating Media");
 
                 Media media = new Media(videoUrl);
 
@@ -45,7 +45,7 @@ public class VideoReminder implements Reminder {
 
                 mediaPlayer.setOnReady(() -> {
 
-                    System.out.println("Video media READY");
+                    //System.out.println("Video media READY");
 
                     positionUtil = new ScreenPosition(
                             screenPositionEnum,
@@ -76,7 +76,7 @@ public class VideoReminder implements Reminder {
                     stage.setAlwaysOnTop(true);
                     stage.show();
 
-                    System.out.println("Starting video playback");
+                    //System.out.println("Starting video playback");
 
                     mediaPlayer.play();
                 });
@@ -90,19 +90,19 @@ public class VideoReminder implements Reminder {
     @Override
     public void stop() {
 
-        System.out.println("Video stop called");
+        //System.out.println("Video stop called");
 
         Platform.runLater(() -> {
 
             if (mediaPlayer != null) {
-                System.out.println("Stopping video player");
+                //System.out.println("Stopping video player");
                 mediaPlayer.stop();
                 mediaPlayer.dispose();
                 mediaPlayer = null;
             }
 
             if (stage != null) {
-                System.out.println("Closing video stage");
+                //System.out.println("Closing video stage");
                 stage.close();
                 stage = null;
             }

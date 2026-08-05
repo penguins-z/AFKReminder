@@ -26,7 +26,7 @@ public class ImageReminder implements Reminder {
     @Override
     public void execute() {
 
-        System.out.println("Image execute called");
+        //System.out.println("Image execute called");
 
         Platform.runLater(() -> {
 
@@ -39,12 +39,7 @@ public class ImageReminder implements Reminder {
                 int mediaWidth = (int) image.getWidth();
                 int mediaHeight = (int) image.getHeight();
 
-                System.out.println(
-                        "Image dimensions: "
-                                + mediaWidth
-                                + "x"
-                                + mediaHeight
-                );
+                //System.out.println("Image dimensions: " + mediaWidth + "x" + mediaHeight);
 
                 ScreenPosition positionUtil =
                         new ScreenPosition(
@@ -78,7 +73,7 @@ public class ImageReminder implements Reminder {
                 stage.setAlwaysOnTop(true);
                 stage.show();
 
-                System.out.println("Image displayed");
+                //System.out.println("Image displayed");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -89,13 +84,13 @@ public class ImageReminder implements Reminder {
     @Override
     public void stop() {
 
-        System.out.println("Image stop called");
+        //System.out.println("Image stop called");
 
         Platform.runLater(() -> {
 
             if (stage != null) {
 
-                System.out.println("Closing image stage");
+                //System.out.println("Closing image stage");
 
                 stage.close();
                 stage = null;

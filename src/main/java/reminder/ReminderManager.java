@@ -10,9 +10,9 @@ public class ReminderManager {
     private final List<Reminder> reminders = new ArrayList<>();
 
     public ReminderManager(Config config) {
-        System.out.println("Audio enabled: " + config.isAudioEnabled());
-        System.out.println("Image enabled: " + config.isImageEnabled());
-        System.out.println("Video enabled: " + config.isVideoEnabled());
+        //System.out.println("Audio enabled: " + config.isAudioEnabled());
+        //System.out.println("Image enabled: " + config.isImageEnabled());
+        //System.out.println("Video enabled: " + config.isVideoEnabled());
         boolean audioEnabled = config.isAudioEnabled();
         boolean imageEnabled = config.isImageEnabled();
         boolean videoEnabled = config.isVideoEnabled();
@@ -20,7 +20,6 @@ public class ReminderManager {
             reminders.add(new AudioReminder(config.getAudioFile()));
         }
         if(imageEnabled && videoEnabled) {
-
             reminders.add(new VideoReminder(config.getVideoFile(), ScreenPositionEnum.RIGHT));
             reminders.add(new ImageReminder(config.getImageFile(), ScreenPositionEnum.LEFT));
         }
@@ -30,13 +29,13 @@ public class ReminderManager {
         else if(videoEnabled) {
             reminders.add(new VideoReminder(config.getVideoFile(), ScreenPositionEnum.CENTER));
         }
-        System.out.println("Reminders created: " + reminders.size());
+        //System.out.println("Reminders created: " + reminders.size());
     }
 
     public void triggerReminders() {
-        System.out.println("Triggering " + reminders.size() + " reminders");
+        //System.out.println("Triggering " + reminders.size() + " reminders");
         for(Reminder reminder : reminders) {
-            System.out.println("Executing: " + reminder.getClass().getSimpleName());
+            //System.out.println("Executing: " + reminder.getClass().getSimpleName());
             reminder.execute();
         }
     }

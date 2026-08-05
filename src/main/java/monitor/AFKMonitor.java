@@ -21,22 +21,22 @@ public class AFKMonitor {
         boolean success = User32.INSTANCE.GetLastInputInfo(lastInputInfo);
 
         if (!success) {
-            System.out.println("Failed to get last input info!");
+            //System.out.println("Failed to get last input info!");
             return;
         }
 
         int currentTickCount = Kernel32.INSTANCE.GetTickCount();
 
         int idleSeconds = (currentTickCount - lastInputInfo.dwTime) / 1000;
-        System.out.println("dw time: " + lastInputInfo.dwTime);
-        System.out.println("idle seconds is:  " + idleSeconds);
+        //System.out.println("dw time: " + lastInputInfo.dwTime);
+        //System.out.println("idle seconds is:  " + idleSeconds);
 
         if (idleSeconds >= idleThresholdSeconds && !reminderTriggered) {
-            System.out.println("THRESHOLD REACHED - TRIGGERING REMINDERS");
+            //System.out.println("THRESHOLD REACHED - TRIGGERING REMINDERS");
             reminderManager.triggerReminders();
             reminderTriggered = true;
         }else if(idleSeconds < idleThresholdSeconds && reminderTriggered) {
-            System.out.println("IDLE RESET - STOPPING REMINDERS");
+            //System.out.println("IDLE RESET - STOPPING REMINDERS");
             reminderManager.stopReminders();
             reminderTriggered = false;
         }

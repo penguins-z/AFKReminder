@@ -22,24 +22,23 @@ public class AFKLogger {
             LOG_DIRECTORY.resolve("app.log");
 
     private static Logger logger;
+    private static FileHandler fileHandler;
 
     private AFKLogger() {
         // Prevent instantiation.
     }
 
     public static void initialize() {
+
         try {
+
             Files.createDirectories(LOG_DIRECTORY);
 
-            // Clear the previous session's log.
-            Files.writeString(LOG_FILE, "");
-
             logger = Logger.getLogger("AFKReminder");
+
             logger.setUseParentHandlers(false);
 
-            FileHandler fileHandler = new FileHandler(
-                    LOG_FILE.toString(),
-                    true
+            fileHandler = new FileHandler(LOG_FILE.toString(), false
             );
 
             fileHandler.setFormatter(new SimpleFormatter());
@@ -60,6 +59,13 @@ public class AFKLogger {
     public static void error(String message, Throwable throwable) {
         if (logger != null) {
             logger.log(Level.SEVERE, message, throwable);
+        }
+    }
+
+    public static void close() {
+        if (fileHandler != null) {
+            fileHandler.close();
+            fileHandler = null;
         }
     }
 }
