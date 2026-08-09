@@ -1,5 +1,11 @@
 AFK Reminder
 
+**Releases**
+
+Stable Windows installers are distributed through GitHub Releases rather than being committed directly to the repository.
+
+Each release contains the corresponding Windows .exe installer as a downloadable release asset.
+
 A lightweight Windows desktop application that detects when your computer has been idle for a configurable amount of time and displays a reminder until activity resumes.
 
 AFK Reminder is designed to help you stay aware of long periods of inactivity while studying, working, or using your computer.
@@ -134,12 +140,6 @@ The resulting JAR will be generated in:
 target/
 
 For development, the application can be run from the generated JAR or directly from the IDE.
-
-**Releases**
-
-Stable Windows installers are distributed through GitHub Releases rather than being committed directly to the repository.
-
-Each release contains the corresponding Windows .exe installer as a downloadable release asset.
 
 **License**
 
