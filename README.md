@@ -1,14 +1,18 @@
-AFK Reminder
-
 **Releases**
 
 Stable Windows installers are distributed through GitHub Releases rather than being committed directly to the repository.
 
 Each release contains the corresponding Windows .exe installer as a downloadable release asset.
 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+**AFK Reminder**
+
 A lightweight Windows desktop application that detects when your computer has been idle for a configurable amount of time and displays a reminder until activity resumes.
 
 AFK Reminder is designed to help you stay aware of long periods of inactivity while studying, working, or using your computer.
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 **Features**
 ⏱️ Configurable idle-time detection
@@ -24,6 +28,8 @@ AFK Reminder is designed to help you stay aware of long periods of inactivity wh
 🚀 Distributed as a standalone Windows application
 📥 Windows installer with Start Menu and Desktop shortcut
 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 **Download**
 
 The latest Windows installer is available in the Releases section of this repository.
@@ -34,7 +40,9 @@ Run the installer and AFK Reminder will be added to your Windows applications.
 
 To uninstall, go to settings, search for "Add or remove programs" and uninstall from there, then go to file explorer, type %LOCALAPPDATA% in address bar and delete the AFKReminder folder there 
 
-How It Works
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+**How It Works**
 
 AFK Reminder periodically checks the amount of time since the last user input.
 
@@ -43,6 +51,8 @@ When the configured idle threshold is reached, the enabled reminders are trigger
 Once the user becomes active again, the reminders stop and the idle timer resets.
 
 The application runs in the Windows system tray while monitoring activity.
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 **Configuration**
 
@@ -77,6 +87,8 @@ reminder.video.file	Path to the video file
 
 AFK Reminder validates the configuration when it starts and reports invalid or missing values rather than silently continuing with a broken configuration.
 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 **Default Media**
 
 A default reminder package is included with the application:
@@ -89,6 +101,8 @@ The default video reminder is enabled on a fresh installation.
 
 The media files are copied to the user's local AFK Reminder directory when the initial configuration is created.
 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 **Technology**
 
 AFK Reminder is built with:
@@ -100,7 +114,9 @@ Maven — dependency and build management
 jlink — custom Java runtime creation
 jpackage — Windows application and installer packaging
 
-Project Structure
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+**Project Structure**
 src/
 ├── main/
 │   ├── java/
@@ -117,6 +133,8 @@ icon/
 pom.xml
 
 Generated build and packaging files are intentionally excluded from the repository.
+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 **Building From Source**
 Requirements:
@@ -141,6 +159,8 @@ target/
 
 For development, the application can be run from the generated JAR or directly from the IDE.
 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 **License**
 
-This project is currently provided for personal and educational use.
+This project is currently provided only for personal and educational use.
