@@ -64,6 +64,11 @@ public class ImageReminder implements Reminder {
                 );
 
                 stage = new Stage();
+                stage.getIcons().add(
+                        new Image(
+                                getClass().getResourceAsStream("/AFKReminderIcon.png")
+                        )
+                );
 
                 stage.setScene(scene);
 

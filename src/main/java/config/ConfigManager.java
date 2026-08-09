@@ -92,7 +92,7 @@ public class ConfigManager {
 
             properties.setProperty(
                     "idle.threshold.seconds",
-                    "2"
+                    "120"
             );
 
             properties.setProperty(
